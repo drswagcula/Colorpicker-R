@@ -1,5 +1,5 @@
 import React from 'react';
-import ColorPicker from './ColorPicker'; // Adjust the path
+import ColorPicker from './ColorPicker'; 
 
 function App() {
   return (
