@@ -10,7 +10,11 @@ const ColorPicker = () => {
 
   const handleCellClick = (index) => {
     const newBoard = [...board];
-    newBoard[index] = selectedColor;
+    if (newBoard[index] === selectedColor) {
+      newBoard[index] = null; // Clear the cell if it already has the same color
+    } else {
+      newBoard[index] = selectedColor; // Otherwise, set the color
+    }
     setBoard(newBoard);
   };
 
@@ -18,18 +22,27 @@ const ColorPicker = () => {
     setSelectedColorIndex((prevIndex) => (prevIndex + 1) % colors.length);
   };
 
+  const handleClearButtonClick = () => {
+    setBoard(Array(100).fill(null));
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-      <button
-        style={{ backgroundColor: selectedColor, margin: '20px' }}
-        onClick={handleColorButtonClick}
-      >
-        Current Color
-      </button>
+      <div style={{ display: 'flex', marginBottom: '20px' }}>
+        <button
+          style={{ backgroundColor: selectedColor, margin: '5px' }}
+          onClick={handleColorButtonClick}
+        >
+          Change Color
+        </button>
+        <button style={{ margin: '5px' }} onClick={handleClearButtonClick}>
+          Clear Board
+        </button>
+      </div>
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(10, 30px)',
+          gridTemplateColumns: 'repeat(10, 60px)',
           border: '1px solid black',
         }}
       >
@@ -37,8 +50,8 @@ const ColorPicker = () => {
           <div
             key={index}
             style={{
-              width: '30px',
-              height: '30px',
+              width: '60px',
+              height: '60px',
               border: '1px solid lightgray',
               backgroundColor: color,
             }}
